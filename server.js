@@ -8,7 +8,7 @@ const app = express()
 const htmlParse = text({ type: 'text/html' })
 
 app.post('/', htmlParse, (req, res) => {
-  res.set('Content-Type', 'application/text')
+  res.set('Content-Type', 'application/json')
   try {
     let parsedBody = html2adf(req.body)
     console.log(parsedBody)
