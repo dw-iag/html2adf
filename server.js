@@ -1,11 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-const { text, json } = bodyParser
-
 import html2adf from './lib/html2adf.js'
+import html from 'index.js'
 
 const app = express()
-const htmlParse = text({ type: 'text/html' })
+const htmlParse = bodyParser.text({ type: 'text/html' })
 
 app.post('/', htmlParse, (req, res) => {
   res.set('Content-Type', 'application/json')
@@ -19,10 +18,9 @@ app.post('/', htmlParse, (req, res) => {
   }
 })
 
-app.get('/', json, (_req, res) => {
-  res.send('Hello World!')
-})
+app.get("/", (req, res) => res.type('html').send(html));
 
-app.listen(3000, () => {
-  console.log('Server is listening on port 3000')
-})
+const server = app.listen(10000, () => console.log(`App listening on port 10000!`));
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
